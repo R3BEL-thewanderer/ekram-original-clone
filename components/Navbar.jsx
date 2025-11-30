@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useCurrencyStore } from '@/lib/store';
 import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,6 +19,8 @@ export default function Navbar() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [user, setUser] = useState(null);
     const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
+    const { currency, setCurrency, symbol, rate } = useCurrencyStore();
+    const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -142,13 +144,45 @@ export default function Navbar() {
 
                         {/* Icons & Search Bar */}
                         <div className="flex items-center space-x-6 relative">
+                            {/* Currency Selector */}
+                            <div className="relative">
+                                <button
+                                    onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
+                                    className="text-[#333333] hover:text-[#5A7D5C] transition-colors font-medium text-sm flex items-center gap-1"
+                                >
+                                    {currency}
+                                    <svg
+                                        className={`w-3 h-3 transition-transform duration-200 ${isCurrencyOpen ? 'rotate-180' : ''}`}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                {isCurrencyOpen && (
+                                    <div className="absolute top-full right-0 mt-2 w-24 bg-white shadow-lg rounded-md py-1 z-50 border border-gray-100">
+                                        {['INR', 'USD', 'GBP', 'EUR'].map((curr) => (
+                                            <button
+                                                key={curr}
+                                                onClick={() => {
+                                                    setCurrency(curr);
+                                                    setIsCurrencyOpen(false);
+                                                }}
+                                                className={`block w-full text-left px-4 py-2 text-sm hover:bg-[#F8F6F1] hover:text-[#5A7D5C] transition-colors ${currency === curr ? 'font-bold text-[#5A7D5C]' : 'text-gray-700'}`}
+                                            >
+                                                {curr}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                             {/* Expandable Search Bar */}
                             <div
                                 className="flex items-center"
                                 onMouseEnter={() => setIsSearchOpen(true)}
                                 onMouseLeave={() => {
                                     if (!searchQuery) setIsSearchOpen(false);
-                                    setSuggestions([]);
                                 }}
                             >
                                 <motion.div
@@ -176,34 +210,37 @@ export default function Navbar() {
                                     />
                                     {/* Search Suggestions Dropdown */}
                                     {suggestions.length > 0 && isSearchOpen && (
-                                        <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md mt-2 py-2 z-50 border border-gray-100">
-                                            <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Products</div>
-                                            {suggestions.map((product) => (
-                                                <Link
-                                                    key={product._id}
-                                                    href={`/products/${product.slug}`}
-                                                    className="flex items-center px-4 py-2 hover:bg-gray-50 transition-colors"
-                                                    onClick={() => {
-                                                        setIsSearchOpen(false);
-                                                        setSuggestions([]);
-                                                    }}
+                                        <>
+                                            <div className="absolute top-full left-0 w-full h-2 bg-transparent"></div>
+                                            <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md mt-2 py-2 z-50 border border-gray-100">
+                                                <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">Products</div>
+                                                {suggestions.map((product) => (
+                                                    <Link
+                                                        key={product._id}
+                                                        href={`/products/${product.slug}`}
+                                                        className="flex items-center px-4 py-2 hover:bg-gray-50 transition-colors"
+                                                        onClick={() => {
+                                                            setIsSearchOpen(false);
+                                                            setSuggestions([]);
+                                                        }}
+                                                    >
+                                                        <div className="relative w-10 h-12 flex-shrink-0 bg-gray-100 rounded overflow-hidden mr-3">
+                                                            <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm font-medium text-[#333333]">{product.name}</p>
+                                                            <p className="text-xs text-[#5A7D5C]">{symbol}{(product.price * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                                                        </div>
+                                                    </Link>
+                                                ))}
+                                                <button
+                                                    onClick={handleSearch}
+                                                    className="w-full text-left px-4 py-2 text-xs text-[#5A7D5C] font-bold border-t border-gray-100 hover:bg-gray-50"
                                                 >
-                                                    <div className="relative w-10 h-12 flex-shrink-0 bg-gray-100 rounded overflow-hidden mr-3">
-                                                        <Image src={product.images[0]} alt={product.name} fill className="object-cover" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-medium text-[#333333]">{product.name}</p>
-                                                        <p className="text-xs text-[#5A7D5C]">₹{product.price.toLocaleString('en-IN')}</p>
-                                                    </div>
-                                                </Link>
-                                            ))}
-                                            <button
-                                                onClick={handleSearch}
-                                                className="w-full text-left px-4 py-2 text-xs text-[#5A7D5C] font-bold border-t border-gray-100 hover:bg-gray-50"
-                                            >
-                                                Search for &quot;{searchQuery}&quot; &rarr;
-                                            </button>
-                                        </div>
+                                                    Search for &quot;{searchQuery}&quot; &rarr;
+                                                </button>
+                                            </div>
+                                        </>
                                     )}
                                 </motion.div>
                                 <button
@@ -274,7 +311,7 @@ export default function Navbar() {
                                                     <div className="flex-1 min-w-0">
                                                         <p className="text-sm font-medium text-[#333333] truncate">{item.name}</p>
                                                         <p className="text-xs text-gray-500">{item.size} | {item.color}</p>
-                                                        <p className="text-sm font-bold text-[#5A7D5C]">₹{item.price.toLocaleString('en-IN')}</p>
+                                                        <p className="text-sm font-bold text-[#5A7D5C]">{symbol}{(item.price * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                                                     </div>
                                                 </div>
                                             ))}

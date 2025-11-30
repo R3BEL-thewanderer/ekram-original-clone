@@ -4,8 +4,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FiShoppingBag, FiEye } from 'react-icons/fi';
+import { useCurrencyStore } from '@/lib/store';
 
 export default function ProductCard({ product }) {
+    const { symbol, rate } = useCurrencyStore();
     return (
         <motion.div
             className="group relative"
@@ -52,7 +54,7 @@ export default function ProductCard({ product }) {
                     </h3>
                     <p className="mt-1 text-sm text-gray-500">{product.category}</p>
                 </div>
-                <p className="text-lg font-medium text-[#5A7D5C]">₹{product.price.toLocaleString('en-IN')}</p>
+                <p className="text-lg font-medium text-[#5A7D5C]">{symbol}{(product.price * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
             </div>
 
             {/* Color Swatches */}

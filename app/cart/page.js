@@ -1,6 +1,6 @@
 'use client';
 
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useCurrencyStore } from '@/lib/store';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiTrash2, FiMinus, FiPlus } from 'react-icons/fi';
@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 
 export default function CartPage() {
     const { items, removeItem, updateQuantity, getCartTotal } = useCartStore();
+    const { symbol, rate } = useCurrencyStore();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function CartPage() {
                                 <div>
                                     <div className="flex justify-between">
                                         <h3 className="font-medium text-lg text-[#333333]">{item.name}</h3>
-                                        <p className="font-medium text-[#333333]">₹{(item.price * item.quantity).toLocaleString('en-IN')}</p>
+                                        <p className="font-medium text-[#333333]">{symbol}{(item.price * item.quantity * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                                     </div>
                                     <p className="text-sm text-gray-500 mt-1">{item.category}</p>
                                     <div className="mt-2 text-sm text-gray-600">
@@ -87,7 +88,7 @@ export default function CartPage() {
                         <div className="space-y-4 text-sm text-gray-600">
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
-                                <span>₹{getCartTotal().toLocaleString('en-IN')}</span>
+                                <span>{symbol}{(getCartTotal() * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Shipping</span>
@@ -95,7 +96,7 @@ export default function CartPage() {
                             </div>
                             <div className="border-t border-gray-300 pt-4 flex justify-between font-bold text-lg text-[#333333]">
                                 <span>Total</span>
-                                <span>₹{getCartTotal().toLocaleString('en-IN')}</span>
+                                <span>{symbol}{(getCartTotal() * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                             </div>
                         </div>
 

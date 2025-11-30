@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FiMinus, FiPlus, FiShare2, FiStar } from 'react-icons/fi';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useCurrencyStore } from '@/lib/store';
 import ProductCard from '@/components/ProductCard';
 
 export default function ProductDetailClient({ product, relatedProducts }) {
@@ -16,6 +16,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
     const [reviews, setReviews] = useState([]);
     const [reviewsData, setReviewsData] = useState(null);
     const addItem = useCartStore((state) => state.addItem);
+    const { symbol, rate } = useCurrencyStore();
 
     // Fetch reviews
     useEffect(() => {
@@ -90,7 +91,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 <div className="space-y-8">
                     <div>
                         <h1 className="font-serif text-4xl font-bold text-[#333333]">{product.name}</h1>
-                        <p className="text-2xl font-medium text-[#5A7D5C] mt-2">₹{product.price.toLocaleString('en-IN')}</p>
+                        <p className="text-2xl font-medium text-[#5A7D5C] mt-2">{symbol}{(product.price * rate).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                         <p className="text-sm text-gray-500 mt-1">Tax included.</p>
                     </div>
 
