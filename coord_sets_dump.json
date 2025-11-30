@@ -1,0 +1,136 @@
+[
+  {
+    "name": "Vardhana",
+    "slug": "vardhana",
+    "images": [
+      "https://placehold.co/600x800/333/FFF?text=Vardhana"
+    ],
+    "colors": [
+      {
+        "name": "Blue",
+        "hex": "#0000FF",
+        "_id": "692b5a9cfe6021797f103970"
+      },
+      {
+        "name": "Black",
+        "hex": "#000000",
+        "_id": "692b5a9cfe6021797f103971"
+      }
+    ]
+  },
+  {
+    "name": "Jivida",
+    "slug": "jivida",
+    "images": [
+      "https://placehold.co/600x800/5A7D5C/FFF?text=Jivida"
+    ],
+    "colors": [
+      {
+        "name": "Pink",
+        "hex": "#FFC0CB",
+        "_id": "692b5a9cfe6021797f103973"
+      },
+      {
+        "name": "Peach",
+        "hex": "#FFDAB9",
+        "_id": "692b5a9cfe6021797f103974"
+      },
+      {
+        "name": "Coral",
+        "hex": "#FF7F50",
+        "_id": "692b5a9cfe6021797f103975"
+      }
+    ]
+  },
+  {
+    "name": "Samragani",
+    "slug": "samragani",
+    "images": [
+      "https://placehold.co/600x800/D4AF37/FFF?text=Samragani"
+    ],
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#FF0000",
+        "_id": "692b5a9cfe6021797f103977"
+      },
+      {
+        "name": "Maroon",
+        "hex": "#800000",
+        "_id": "692b5a9cfe6021797f103978"
+      },
+      {
+        "name": "Gold",
+        "hex": "#FFD700",
+        "_id": "692b5a9cfe6021797f103979"
+      },
+      {
+        "name": "Silver",
+        "hex": "#C0C0C0",
+        "_id": "692b5a9cfe6021797f10397a"
+      },
+      {
+        "name": "Black",
+        "hex": "#000000",
+        "_id": "692b5a9cfe6021797f10397b"
+      },
+      {
+        "name": "White",
+        "hex": "#FFFFFF",
+        "_id": "692b5a9cfe6021797f10397c"
+      }
+    ]
+  },
+  {
+    "name": "Raagini",
+    "slug": "raagini",
+    "images": [
+      "https://placehold.co/600x800/333/FFF?text=Raagini"
+    ],
+    "colors": [
+      {
+        "name": "Multicolor",
+        "hex": "#FF00FF",
+        "_id": "692b5a9cfe6021797f10397e"
+      },
+      {
+        "name": "Blue Mix",
+        "hex": "#0000FF",
+        "_id": "692b5a9cfe6021797f10397f"
+      }
+    ]
+  },
+  {
+    "name": "Sadhakaa",
+    "slug": "sadhakaa",
+    "images": [
+      "https://placehold.co/600x800/5A7D5C/FFF?text=Sadhakaa"
+    ],
+    "colors": [
+      {
+        "name": "Grey",
+        "hex": "#808080",
+        "_id": "692b5a9cfe6021797f103981"
+      }
+    ]
+  },
+  {
+    "name": "Narmada",
+    "slug": "narmada",
+    "images": [
+      "https://placehold.co/600x800/D4AF37/FFF?text=Narmada"
+    ],
+    "colors": [
+      {
+        "name": "Blue",
+        "hex": "#0000FF",
+        "_id": "692b5a9cfe6021797f103983"
+      },
+      {
+        "name": "Teal",
+        "hex": "#008080",
+        "_id": "692b5a9cfe6021797f103984"
+      }
+    ]
+  }
+]
