@@ -10,7 +10,7 @@ const ProductSchema = new mongoose.Schema({
 
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 
-async function fixLaavanya() {
+async function updateLaavanya() {
     try {
         await mongoose.connect(MONGODB_URI);
         console.log('Connected to MongoDB');
@@ -63,4 +63,4 @@ async function fixLaavanya() {
     }
 }
 
-fixLaavanya();
+updateLaavanya();

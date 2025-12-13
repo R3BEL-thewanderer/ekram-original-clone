@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
 
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 
-async function fixCoordSets() {
+async function updateCoordSets() {
     try {
         await mongoose.connect(MONGODB_URI);
         console.log('Connected to MongoDB');
@@ -186,4 +186,4 @@ async function fixCoordSets() {
     }
 }
 
-fixCoordSets();
+updateCoordSets();
